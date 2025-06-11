@@ -81,6 +81,10 @@ Example response:
 }
 ```
 
+## Try the API:
+
+https://wheather-forecast-67q6.onrender.com/api/forecast/US/30150
+
 ## 🧪 Testing
 
 Run the test suite:
