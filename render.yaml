@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: weather-forecast
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_OPTS
+        value: -Xmx512m -Xms256m
