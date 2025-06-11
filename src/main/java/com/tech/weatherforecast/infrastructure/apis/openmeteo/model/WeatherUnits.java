@@ -11,7 +11,7 @@ public class WeatherUnits {
     private String temperature_2m;
     private String temperature_2m_max;
     private String temperature_2m_min;
-    private String precipitation;
-    private String precipitation_probability;
+    private String precipitation_sum;
+    private String precipitation_probability_max;
 
 }

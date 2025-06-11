@@ -15,6 +15,7 @@ import com.tech.weatherforecast.infrastructure.apis.nominatim.NominatimClient;
 import com.tech.weatherforecast.infrastructure.apis.nominatim.model.NominatimResponse;
 import com.tech.weatherforecast.infrastructure.apis.openmeteo.OpenMeteoClient;
 import com.tech.weatherforecast.infrastructure.apis.openmeteo.model.CurrentWeather;
+import com.tech.weatherforecast.infrastructure.apis.openmeteo.model.DailyWeather;
 import com.tech.weatherforecast.infrastructure.apis.openmeteo.model.OpenMeteoResponse;
 import com.tech.weatherforecast.infrastructure.apis.openmeteo.model.WeatherUnits;
 
@@ -79,21 +80,25 @@ class GetForecastByPostalCodeTest {
 
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setTemperature_2m(25.0f);
-        currentWeather.setTemperature_2m_max(28.0f);
-        currentWeather.setTemperature_2m_min(22.0f);
-        currentWeather.setPrecipitation(0.0f);
-        currentWeather.setPrecipitation_probability(10.0f);
+        DailyWeather dailyWeather = new DailyWeather();
+        dailyWeather.setTemperature_2m_max(new float[] { 28.0f });
+        dailyWeather.setTemperature_2m_min(new float[] { 22.0f });
+        dailyWeather.setPrecipitation_sum(new float[] { 0.0f });
+        dailyWeather.setPrecipitation_probability_max(new float[] { 10.0f });
 
-        WeatherUnits weatherUnits = new WeatherUnits();
-        weatherUnits.setTemperature_2m("°C");
-        weatherUnits.setTemperature_2m_max("°C");
-        weatherUnits.setTemperature_2m_min("°C");
-        weatherUnits.setPrecipitation("mm");
-        weatherUnits.setPrecipitation_probability("%");
+        WeatherUnits currentWeatherUnits = new WeatherUnits();
+        currentWeatherUnits.setTemperature_2m("°C");
+        WeatherUnits dailyWeatherUnits = new WeatherUnits();
+        dailyWeatherUnits.setTemperature_2m_max("°C");
+        dailyWeatherUnits.setTemperature_2m_min("°C");
+        dailyWeatherUnits.setPrecipitation_sum("mm");
+        dailyWeatherUnits.setPrecipitation_probability_max("%");
 
         OpenMeteoResponse openMeteoResponse = new OpenMeteoResponse();
         openMeteoResponse.setCurrent(currentWeather);
-        openMeteoResponse.setCurrent_units(weatherUnits);
+        openMeteoResponse.setDaily(dailyWeather);
+        openMeteoResponse.setCurrent_units(currentWeatherUnits);
+        openMeteoResponse.setDaily_units(dailyWeatherUnits);
 
         when(cache.getIfPresent(cacheKey)).thenReturn(null);
         when(nominatimClient.get(country, postalCode)).thenReturn(nominatimResponse);

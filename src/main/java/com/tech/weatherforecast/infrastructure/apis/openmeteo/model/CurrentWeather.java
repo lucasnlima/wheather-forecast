@@ -8,8 +8,4 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeather {
     private float temperature_2m;
-    private float temperature_2m_max;
-    private float temperature_2m_min;
-    private float precipitation;
-    private float precipitation_probability;
 }
