@@ -62,8 +62,8 @@ class GetForecastByPostalCodeTest {
         assertTrue(result.isFromCache());
         assertEquals(cachedForecast.getCityName(), result.getCityName());
         assertEquals(cachedForecast.getTemperature(), result.getTemperature());
-        verify(nominatimClient, never()).get(anyString(), anyString());
-        verify(openMeteoClient, never()).get(anyString(), anyString());
+        verify(nominatimClient, never()).getCoordinates(anyString(), anyString());
+        verify(openMeteoClient, never()).getForecast(anyString(), anyString());
     }
 
     @Test
@@ -101,8 +101,8 @@ class GetForecastByPostalCodeTest {
         openMeteoResponse.setDaily_units(dailyWeatherUnits);
 
         when(cache.getIfPresent(cacheKey)).thenReturn(null);
-        when(nominatimClient.get(country, postalCode)).thenReturn(nominatimResponse);
-        when(openMeteoClient.get(nominatimResponse.getLat(), nominatimResponse.getLon()))
+        when(nominatimClient.getCoordinates(country, postalCode)).thenReturn(nominatimResponse);
+        when(openMeteoClient.getForecast(nominatimResponse.getLat(), nominatimResponse.getLon()))
                 .thenReturn(openMeteoResponse);
 
         // Act
@@ -124,11 +124,11 @@ class GetForecastByPostalCodeTest {
         String country = "Brazil";
         String postalCode = "12345";
         when(cache.getIfPresent(anyString())).thenReturn(null);
-        when(nominatimClient.get(country, postalCode)).thenThrow(new RuntimeException("API Error"));
+        when(nominatimClient.getCoordinates(country, postalCode)).thenThrow(new RuntimeException("API Error"));
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> getForecastByPostalCode.get(country, postalCode));
-        verify(openMeteoClient, never()).get(anyString(), anyString());
+        verify(openMeteoClient, never()).getForecast(anyString(), anyString());
     }
 
     @Test
@@ -141,8 +141,8 @@ class GetForecastByPostalCodeTest {
         nominatimResponse.setLon("-46.6333");
 
         when(cache.getIfPresent(anyString())).thenReturn(null);
-        when(nominatimClient.get(country, postalCode)).thenReturn(nominatimResponse);
-        when(openMeteoClient.get(anyString(), anyString())).thenThrow(new RuntimeException("API Error"));
+        when(nominatimClient.getCoordinates(country, postalCode)).thenReturn(nominatimResponse);
+        when(openMeteoClient.getForecast(anyString(), anyString())).thenThrow(new RuntimeException("API Error"));
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> getForecastByPostalCode.get(country, postalCode));
