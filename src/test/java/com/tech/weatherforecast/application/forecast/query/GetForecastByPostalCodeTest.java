@@ -76,7 +76,7 @@ class GetForecastByPostalCodeTest {
         NominatimResponse nominatimResponse = new NominatimResponse();
         nominatimResponse.setLat("-23.5505");
         nominatimResponse.setLon("-46.6333");
-        nominatimResponse.setDisplay_name("São Paulo, Brazil");
+        nominatimResponse.setDisplayName("São Paulo, Brazil");
 
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setTemperature_2m(25.0f);
