@@ -27,8 +27,8 @@ public class GetForecastByPostalCode {
             return cachedForecast;
         }
 
-        NominatimResponse coordinates = nominatonClient.get(country, postalcode);
-        OpenMeteoResponse weatherInfo = openMeteoClient.get(coordinates.getLat(), coordinates.getLon());
+        NominatimResponse coordinates = nominatonClient.getCoordinates(country, postalcode);
+        OpenMeteoResponse weatherInfo = openMeteoClient.getForecast(coordinates.getLat(), coordinates.getLon());
 
         Forecast forecast = Forecast.builder()
                 .cityName(coordinates.getDisplayName())
