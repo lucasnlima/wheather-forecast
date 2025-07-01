@@ -26,8 +26,8 @@ public class ForecastController {
         if (country == null || country.isBlank()) {
             throw new IllegalArgumentException("Country must not be blank");
         }
-        if (postalCode == null || !postalCode.matches("\\d+")) {
-            throw new IllegalArgumentException("Postal code must contain only digits");
+        if (postalCode == null || !postalCode.matches("[\\d-]+")) {
+            throw new IllegalArgumentException("Postal code must contain only digits and hyphens");
         }
 
         Forecast forecast = getForecastByPostalCode.get(country, postalCode);
